@@ -11,26 +11,56 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #ff4d6d; /* Romantic Pink/Red */
+            background: linear-gradient(135deg, #ff4d6d, #ff758c);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: white;
             text-align: center;
             overflow: hidden;
+            position: relative;
+        }
+
+        /* --- Floating Hearts Background Animation --- */
+        .bg-heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 20px;
+            user-select: none;
+            z-index: 0;
+            animation: float 10s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
         #container {
+            z-index: 10;
             padding: 20px;
         }
 
         h1 {
             font-size: 3rem;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 2px 4px 6px rgba(0,0,0,0.2);
+            animation: fadeInDown 1s ease-out;
         }
 
-        .heart {
-            font-size: 50px;
+        .heart-main {
+            font-size: 60px;
             margin-bottom: 20px;
+            animation: beat 1.2s infinite;
+        }
+
+        /* --- Animations --- */
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .buttons {
@@ -38,56 +68,83 @@
             justify-content: center;
             align-items: center;
             gap: 20px;
-            height: 100px;
+            height: 150px;
         }
 
         button {
-            padding: 15px 35px;
-            font-size: 1.2rem;
+            padding: 15px 40px;
+            font-size: 1.3rem;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         #yesBtn {
-            background-color: #2d6a4f; /* Green for Yes */
+            background-color: #2d6a4f;
             color: white;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(45, 106, 79, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(45, 106, 79, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(45, 106, 79, 0); }
         }
 
         #noBtn {
-            background-color: #ffffff; /* White for No */
+            background-color: #ffffff;
             color: #ff4d6d;
             position: relative;
-        }
-
-        button:hover {
-            transform: scale(1.1);
+            z-index: 100;
         }
 
         .hidden {
             display: none;
         }
+
+        #celebrationSection {
+            animation: zoomIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
     </style>
 </head>
 <body>
 
+    <script>
+        // Create random floating hearts
+        for (let i = 0; i < 20; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'bg-heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            heart.style.opacity = Math.random();
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            document.body.appendChild(heart);
+        }
+    </script>
+
     <div id="container">
         <div id="proposalSection">
-            <div class="heart">❤️</div>
+            <div class="heart-main">❤️</div>
             <h1 id="question">Will You Be My Valentine, Vaishnavi?</h1>
             <div class="buttons">
                 <button id="yesBtn">Yes! 💖</button>
                 <button id="noBtn">No</button>
             </div>
-            <p id="message" style="margin-top: 20px; font-style: italic;"></p>
+            <p id="message" style="margin-top: 20px; font-style: italic; min-height: 24px;"></p>
         </div>
 
         <div id="celebrationSection" class="hidden">
-            <div class="heart">🥳✨❤️</div>
+            <div class="heart-main">🥳✨💖</div>
             <h1>Yay! I Love You!</h1>
-            <p>You made me the happiest, Vaishnavi! 💘</p>
+            <p style="font-size: 1.5rem;">You've made me the happiest, Vaishnavi! 💘</p>
         </div>
     </div>
 
@@ -99,19 +156,18 @@
         const message = document.getElementById("message");
 
         const phrases = [
-            "Really?",
-            "Think again!",
-            "Don't do this!",
-            "I'll be sad :(",
-            "Give me a chance!",
-            "Just click Yes already, Vaishnavi!"
+            "Really?", "Think again!", "Don't do this!", 
+            "I'll be sad :(", "Give me a chance!", 
+            "Just click Yes, Vaishnavi!"
         ];
         
         let phraseIndex = 0;
 
-        // Make the "No" button move away and change text
-        noBtn.addEventListener("mouseover", () => {
-            // Calculate random position
+        // "No" button movement logic
+        noBtn.addEventListener("mouseover", moveButton);
+        noBtn.addEventListener("touchstart", moveButton); // For mobile support
+
+        function moveButton() {
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             
@@ -119,28 +175,19 @@
             noBtn.style.left = `${x}px`;
             noBtn.style.top = `${y}px`;
 
-            // Change button text to guilt-trip messages
             noBtn.innerText = phrases[phraseIndex];
             phraseIndex = (phraseIndex + 1) % phrases.length;
-            
-            // Add a little hint message
-            message.innerText = "Try to catch the button!";
-        });
+            message.innerText = "The 'No' button is running away!";
+        }
 
-        // Handle the "Yes" click
+        // "Yes" button logic
         yesBtn.addEventListener("click", () => {
             proposalSection.classList.add("hidden");
             celebrationSection.classList.remove("hidden");
             
-            // Add some confetti effect (optional)
-            startConfetti();
+            // Change background to a more intense celebration color
+            document.body.style.background = "linear-gradient(135deg, #ef476f, #ffd166)";
         });
-
-        // Simple console-based confetti-like effect
-        function startConfetti() {
-            document.body.style.backgroundColor = "#ff758c";
-            console.log("Success! Happy Valentine's Day, Vaishnavi!");
-        }
     </script>
 </body>
 </html>
