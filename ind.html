@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Vaishnavi ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff6a88, #ff99ac);
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 500px;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+p {
+    font-size: 1.2rem;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.yes {
+    background: white;
+    color: #ff4d6d;
+}
+
+.no {
+    background: #ff4d6d;
+    color: white;
+}
+
+.response {
+    margin-top: 20px;
+    font-size: 1.3rem;
+    display: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>वैष्णवी ❤️</h1>
+    <p>
+        तू माझ्यासाठी खूप खास आहेस…  
+        तू माझी व्हॅलेंटाईन होशील का?
+    </p>
+
+    <button class="yes" onclick="yesResponse()">हो 💖</button>
+    <button class="no" onclick="noResponse()">नाही 😢</button>
+
+    <div class="response" id="responseText"></div>
+</div>
+
+<script>
+function yesResponse() {
+    const response = document.getElementById("responseText");
+    response.style.display = "block";
+    response.innerHTML = "🥰 मला माहित होतं… तू खास आहेस ❤️";
+}
+
+function noResponse() {
+    const response = document.getElementById("responseText");
+    response.style.display = "block";
+    response.innerHTML = "🙂 काही हरकत नाही… तरीही तू खास आहेस.";
+}
+</script>
+
+</body>
+</html>
+
