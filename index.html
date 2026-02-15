@@ -1,173 +1,193 @@
 <!DOCTYPE html>
-<html lang="mr">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vaishnavi साठी ❤️</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Proposal</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #ff4d6d, #ff758c);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
 
-<style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #ff6a88, #ff99ac);
-    color: white;
-    text-align: center;
-    overflow: hidden;
-}
+        /* --- Floating Hearts Background Animation --- */
+        .bg-heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 20px;
+            user-select: none;
+            z-index: 0;
+            animation: float 10s linear infinite;
+        }
 
-.container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    position: relative;
-    z-index: 2;
-}
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
 
-h1 { font-size: 3em; }
+        #container {
+            z-index: 10;
+            padding: 20px;
+        }
 
-p {
-    font-size: 1.3em;
-    max-width: 550px;
-    line-height: 1.6;
-}
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 4px 6px rgba(0,0,0,0.2);
+            animation: fadeInDown 1s ease-out;
+        }
 
-.heart {
-    font-size: 4em;
-    animation: heartbeat 1.2s infinite;
-}
+        .heart-main {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: beat 1.2s infinite;
+        }
 
-.buttons { margin-top: 25px; }
+        /* --- Animations --- */
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
 
-button {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 30px;
-    margin: 10px;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: 0.3s;
-}
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-.yes { background: white; color: #ff4d6d; }
-.no { background: #ff4d6d; color: white; }
+        .buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            height: 150px;
+        }
 
-button:hover { transform: scale(1.1); }
+        button {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
 
-.response {
-    margin-top: 25px;
-    font-size: 1.4em;
-    display: none;
-}
+        #yesBtn {
+            background-color: #2d6a4f;
+            color: white;
+            animation: pulse 2s infinite;
+        }
 
-.hearts {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 1;
-}
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(45, 106, 79, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(45, 106, 79, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(45, 106, 79, 0); }
+        }
 
-.hearts span {
-    position: absolute;
-    font-size: 24px;
-    animation: fall linear infinite;
-}
+        #noBtn {
+            background-color: #ffffff;
+            color: #ff4d6d;
+            position: relative;
+            z-index: 100;
+        }
 
-@keyframes fall {
-    0% { transform: translateY(-10vh); opacity: 1; }
-    100% { transform: translateY(110vh); opacity: 0; }
-}
+        .hidden {
+            display: none;
+        }
 
-@keyframes heartbeat {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-</style>
+        #celebrationSection {
+            animation: zoomIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- Romantic Music (muted first to avoid browser block) -->
-<audio id="bgMusic" autoplay loop muted>
-<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c6d6b8b1c.mp3" type="audio/mpeg">
-</audio>
+    <script>
+        // Create random floating hearts
+        for (let i = 0; i < 20; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'bg-heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            heart.style.opacity = Math.random();
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            document.body.appendChild(heart);
+        }
+    </script>
 
-<!-- Falling Hearts -->
-<div class="hearts">
-    <span style="left:5%; animation-duration:6s;">❤️</span>
-    <span style="left:15%; animation-duration:8s;">💗</span>
-    <span style="left:25%; animation-duration:7s;">❤️</span>
-    <span style="left:40%; animation-duration:9s;">💖</span>
-    <span style="left:55%; animation-duration:6s;">❤️</span>
-    <span style="left:70%; animation-duration:8s;">💗</span>
-    <span style="left:85%; animation-duration:7s;">❤️</span>
-</div>
+    <div id="container">
+        <div id="proposalSection">
+            <div class="heart-main">❤️</div>
+            <h1 id="question">Will You Be My Valentine, Vaishnavi?</h1>
+            <div class="buttons">
+                <button id="yesBtn">Yes! 💖</button>
+                <button id="noBtn">No</button>
+            </div>
+            <p id="message" style="margin-top: 20px; font-style: italic; min-height: 24px;"></p>
+        </div>
 
-<div class="container">
-    <div class="heart">❤️</div>
-
-    <h1>वैष्णवी…</h1>
-
-    <p>
-        तू आयुष्यात कधी हळूच आलीस कळलंच नाही…  
-        पण आज प्रत्येक विचारात तूच असतेस.  
-        मला तुझ्यासोबत सुंदर क्षण जगायचे आहेत 💫
-    </p>
-
-    <p>💖 तू माझी व्हॅलेंटाईन होशील का? 💖</p>
-
-    <div class="buttons">
-        <button class="yes" onclick="yesResponse()">हो 💗</button>
-        <button class="no" onclick="noResponse()">नाही 😢</button>
+        <div id="celebrationSection" class="hidden">
+            <div class="heart-main">🥳✨💖</div>
+            <h1>Yay! I Love You!</h1>
+            <p style="font-size: 1.5rem;">You've made me the happiest, Vaishnavi! 💘</p>
+        </div>
     </div>
 
-    <div class="response" id="responseText"></div>
-</div>
+    <script>
+        const noBtn = document.getElementById("noBtn");
+        const yesBtn = document.getElementById("yesBtn");
+        const proposalSection = document.getElementById("proposalSection");
+        const celebrationSection = document.getElementById("celebrationSection");
+        const message = document.getElementById("message");
 
-<!-- Confetti Library -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+        const phrases = [
+            "Really?", "Think again!", "Don't do this!", 
+            "I'll be sad :(", "Give me a chance!", 
+            "Just click Yes, Vaishnavi!"
+        ];
+        
+        let phraseIndex = 0;
 
-<script>
-const response = document.getElementById("responseText");
-const music = document.getElementById("bgMusic");
+        // "No" button movement logic
+        noBtn.addEventListener("mouseover", moveButton);
+        noBtn.addEventListener("touchstart", moveButton); // For mobile support
 
-// Unmute music on first click
-document.body.addEventListener("click", function () {
-    music.muted = false;
-}, { once: true });
+        function moveButton() {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = "absolute";
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
 
-function yesResponse() {
-    response.style.display = "block";
-    response.innerHTML =
-        "🥰 मला माहित होतं… तू खास आहेस ❤️<br>— सोहम";
+            noBtn.innerText = phrases[phraseIndex];
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            message.innerText = "The 'No' button is running away!";
+        }
 
-    confetti({
-        particleCount: 200,
-        spread: 100,
-        origin: { y: 0.6 }
-    });
-
-    setTimeout(() => {
-        confetti({
-            particleCount: 150,
-            spread: 120,
-            origin: { y: 0.4 }
+        // "Yes" button logic
+        yesBtn.addEventListener("click", () => {
+            proposalSection.classList.add("hidden");
+            celebrationSection.classList.remove("hidden");
+            
+            // Change background to a more intense celebration color
+            document.body.style.background = "linear-gradient(135deg, #ef476f, #ffd166)";
         });
-    }, 500);
-}
-
-function noResponse() {
-    response.style.display = "block";
-    response.innerHTML =
-        "🙂 काही हरकत नाही… तुझं हसणं तरी माझ्यासाठी खास आहे.";
-}
-</script>
-
+    </script>
 </body>
 </html>
